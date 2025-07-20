@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pinyon Script', sans-serif;
+    }
+
+    body {
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #d63384;
+      margin-bottom: 40px;
+    }
+
+    .inputs {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .inputs input {
+      width: 50px;
+      height: 60px;
+      font-size: 2rem;
+      text-align: center;
+      border: 2px solid #d63384;
+      border-radius: 10px;
+      text-transform: uppercase;
+      background-color: #fff;
+      color: #d63384;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #error {
+      color: red;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hoşgeldin, bazı şeylerin şifresi nedir?</h1>
+    <div class="inputs">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 0)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 1)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 2)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 3)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 4)">
+    </div>
+    <button onclick="checkPassword()">Giriş</button>
+    <p id="error"></p>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.inputs input');
+
+    function moveToNext(input, index) {
+      input.value = input.value.toUpperCase();
+      if (input.value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    }
+
+    function checkPassword() {
+      const entered = Array.from(inputs).map(input => input.value).join('');
+      if (entered === 'GÜVEN') {
+        window.location.href = "ana_sayfa.html"; // Devam sayfası
+      } else {
+        document.getElementById('error').textContent = 'Şifre yanlış...';
+      }
+    }
+
+    // Klavye ile geçiş için
+    inputs.forEach((input, i) => {
+      input.addEventListener('keydown', e => {
+        if (e.key === "Backspace" && !input.value && i > 0) {
+          inputs[i - 1].focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
